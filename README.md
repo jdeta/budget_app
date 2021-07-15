@@ -41,6 +41,7 @@ Install Django and some other packages that we'll need
     pip3 install wheel
     pip3 install django psycopg2
     pip3 install python-dateutil
+    pip3 install yfinance
     
 ## Create a Django Project
 
