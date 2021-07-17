@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['10.137.10.224']
 
 INSTALLED_APPS = [
     'budget_app.apps.BudgetAppConfig',
+    'finance_app.apps.FinanceAppConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
