@@ -1,0 +1,25 @@
+{% extends 'finance_app/base.html' %}
+
+	{% block page_content %}
+		<a class="btn btn-primary" href="{% url 'finance_app:new_account' %}">
+                        New Account
+                </a>
+
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Account</th>
+                      <th scope="col">Value</th>
+                    </tr>
+                  </thead>
+                {% for  account in accounts %}
+                  <tbody>
+                    <tr>
+                            <td>{{ account.name  }}</td>
+			    <td>{{ account.value }} </a></td>
+                    </tr>
+                  </tbody>
+                {% endfor %}
+
+	{% endblock %}
+
