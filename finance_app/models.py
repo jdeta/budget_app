@@ -17,6 +17,9 @@ class Account(models.Model):
     name = models.CharField(max_length=64)
     value = models.DecimalField(max_digits=20, decimal_places=2)
 
+    def get_absolute_url(self):
+        return reverse('account-detail', kwargs={'id':self.id})
+
     def __str__(self):
         return self.name
 
