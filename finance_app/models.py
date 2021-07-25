@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from datetime import date
 
 
@@ -18,7 +19,7 @@ class Account(models.Model):
     value = models.DecimalField(max_digits=20, decimal_places=2)
 
     def get_absolute_url(self):
-        return reverse('account-detail', kwargs={'id':self.id})
+        return reverse('finance_app:account-detail', kwargs={'account_id':self.id})
 
     def __str__(self):
         return self.name

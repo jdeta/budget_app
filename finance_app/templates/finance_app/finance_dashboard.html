@@ -15,8 +15,8 @@
                 {% for  account in accounts %}
                   <tbody>
                     <tr>
-                            <td>{{ account.name  }}</td>
-			    <td>{{ account.value }} </a></td>
+			    <td><a href="{{ account.get_absolute_url }}">{{ account.name }}</a></td>
+			    <td>{{ account.value }}</td>
                     </tr>
                   </tbody>
                 {% endfor %}

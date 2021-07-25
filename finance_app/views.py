@@ -21,3 +21,9 @@ def add_account(request):
         account_form = NewAccountForm()
         return render(request, 'finance_app/account_new.html', {'account_form': account_form})
 
+def account_detail(request, account_id):
+    specific_account = get_object_or_404(Account, pk=account_id)
+    context = {'specific_account':specific_account}
+
+    return render(request, 'finance_app/account_detail.html', context)
+
