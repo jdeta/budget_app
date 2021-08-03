@@ -69,7 +69,7 @@ class TransactionModelsTests(TestCase):
                 )
 
     def test_date_label(self):
-        fake_transaction = Transaction.objects.get(pk=1)
+        fake_transaction = Transaction.objects.geto(pk=1)
         date_label = fake_transaction._meta.get_field('date').verbose_name
         self.assertEqual(date_label, 'date')
 
@@ -139,4 +139,5 @@ class CategoryModelTests(TestCase):
 
     def test_category_string_output(self):
         test_category = Category.objects.get(pk=1)
-        self.assertEqual(test_category.name, str(category.name))
+        self.assertEqual(test_category.name, str(test_category.name))
+
