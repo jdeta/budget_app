@@ -1,0 +1,12 @@
+{% extends 'finance_app/base.html' %}
+  
+        {% block page_content %}
+
+                <h2>New Asset </h2>
+                <form method="POST">
+                        {% csrf_token %}
+                        {{ asset_form }}
+                        <button type="submit"class="btn btn-primary">Add</button>
+                </form>
+                <br>
+        {% endblock %}

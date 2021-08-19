@@ -1,4 +1,32 @@
 {% extends 'finance_app/base.html' %}
 
 {% block page_content %}
+
+ <a class="btn btn-primary" href="{% url 'finance_app:asset_new' specific_account.id %}">
+                Add Asset
+ </a>
+
+<table class="table">
+        <thead>
+                <tr>
+                        <th scope="col">Ticker Symbol</th>
+                        <th scope="col">Shares</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Asset Value</th>
+ 		</tr>
+        </thead>
+        {% for asset in account_assets %}
+                <tbody>
+                        <tr>
+                                <td>{{ asset.ticker }}</td>
+                                <td>{{ asset.shares }}</th>
+                                <td>{{ asset.price }}</td>
+                                <td>{{ asset.value }}</td>
+                        </tr>
+                </tbody>
+        {% endfor %}
+</table>
+
+
+
 {% endblock %}

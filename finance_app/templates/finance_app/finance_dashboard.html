@@ -9,6 +9,7 @@
                   <thead>
                     <tr>
                       <th scope="col">Account</th>
+		      <th scope="col">Type</th>
                       <th scope="col">Value</th>
                     </tr>
                   </thead>
@@ -16,6 +17,7 @@
                   <tbody>
                     <tr>
 			    <td><a href="{{ account.get_absolute_url }}">{{ account.name }}</a></td>
+			    <td>{{ account.category }}</td>
 			    <td>{{ account.value }}</td>
                     </tr>
                   </tbody>

@@ -11,4 +11,4 @@ class NewAssetForm(forms.ModelForm):
 
     class Meta:
         model = Asset
-        fields = ('ticker',)
+        fields = ('ticker', 'shares',)
