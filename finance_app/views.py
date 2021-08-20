@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
+from django.db.models import Sum
 from .models import AssetAccount, Asset
 from .forms import NewAccountForm, NewAssetForm
 import yfinance as yf
@@ -25,6 +27,10 @@ def add_account(request):
 
 def account_detail(request, account_id):
     specific_account = get_object_or_404(AssetAccount, pk=account_id)
+    every_asset = Asset.objects.filter(account=specific_account)
+    total_value = every_asset.aggregate(Sum('value'))['value__sum'] or dc(0.00)
+    specific_account.value = total_value
+    specific_account.save()
     account_assets = Asset.objects.filter(account=specific_account) 
     context = {
             'specific_account':specific_account,
@@ -38,17 +44,22 @@ def new_asset(request, account_id):
         asset_form = NewAssetForm(request.POST)
 
         if asset_form.is_valid():
+            account = AssetAccount.objects.get(pk = account_id)
             asset = asset_form.save(commit=False)
             stock = yf.Ticker(asset.ticker)
             stock_info = stock.info['currentPrice']
             asset.price = stock_info
             asset.value = dc(asset.price) * asset.shares
-            asset.account = account_id
+            asset.account = account
             asset.save()
-            return redirect('/finance/account_id/')
+            return redirect(reverse('finance_app:account-detail', kwargs={'account_id':account_id}))
 
     else:
         asset_form = NewAssetForm()
         return render(request, 'finance_app/asset_new.html', {'asset_form':asset_form})
 
+def delete_account():
+    pass
 
+def delete_asset():
+    pass
