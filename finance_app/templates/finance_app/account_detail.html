@@ -23,7 +23,14 @@
                                 <td>{{ asset.shares }}</th>
                                 <td>{{ asset.price }}</td>
                                 <td>{{ asset.value }}</td>
-				<td><a class="btn btn-default" href="{%url 'finance_app:delete-asset' specific_account.id asset.id %}">Delete</td>
+				<td>
+					<form method="POST" action="{% url 'finance_app:delete-asset' specific_account.id asset.id %}">
+						{% csrf_token %}
+							<button class="btn btn-default">
+								Delete
+							</button>
+					</form>
+				</td>
                         </tr>
                 </tbody>
         {% endfor %}

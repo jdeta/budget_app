@@ -38,6 +38,9 @@ def account_detail(request, account_id):
 
 
 def delete_account(request, account_id_):
+    
+
+
     pass
 
 
@@ -62,6 +65,8 @@ def new_asset(request, account_id):
         return render(request, 'finance_app/asset_new.html', {'asset_form':asset_form})
 
 def delete_asset(request, asset_id, account_id):
-    deleted_asset = get_object_or_404(Asset, pk=asset_id).delete()
-
-    return redirect(reverse('finance_app:account-detail',kwargs={'account_id':account_id}))
+    if request.method == "POST":
+        deleted_asset = get_object_or_404(Asset, pk=asset_id).delete()
+        return redirect(reverse('finance_app:account-detail',kwargs={'account_id':account_id}))
+    else:
+        return redirect(reverse('finance_app:account-detail',kwargs={'account_id':account_id}))
