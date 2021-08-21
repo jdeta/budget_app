@@ -11,6 +11,7 @@
                       <th scope="col">Account</th>
 		      <th scope="col">Type</th>
                       <th scope="col">Value</th>
+		      <th></th>
                     </tr>
                   </thead>
                 {% for  account in accounts %}
@@ -19,6 +20,14 @@
 			    <td><a href="{{ account.get_absolute_url }}">{{ account.name }}</a></td>
 			    <td>{{ account.category }}</td>
 			    <td>${{ account.value }}</td>
+			    <td>
+				    <form method="POST" action="{% url 'finance_app:delete-account' account.id %}">
+					    {% csrf_token %}
+					    	<button class="btn btn-default">
+							Delete
+						</button>
+	    			    </form>
+			    </td>
                     </tr>
                   </tbody>
                 {% endfor %}

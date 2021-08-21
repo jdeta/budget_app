@@ -37,11 +37,12 @@ def account_detail(request, account_id):
     return render(request, 'finance_app/account_detail.html', context)
 
 
-def delete_account(request, account_id_):
-    
-
-
-    pass
+def delete_account(request, account_id):
+    if request.method == "POST":
+        deleted_account = get_object_or_404(AssetAccount, pk=account_id).delete()
+        return redirect('/finance')
+    else:
+        return redirect('/finance')
 
 
 
