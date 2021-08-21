@@ -36,6 +36,12 @@ def account_detail(request, account_id):
 
     return render(request, 'finance_app/account_detail.html', context)
 
+
+def delete_account(request, account_id_):
+    pass
+
+
+
 def new_asset(request, account_id):
     if request.method == "POST":
         asset_form = NewAssetForm(request.POST)
@@ -55,8 +61,7 @@ def new_asset(request, account_id):
         asset_form = NewAssetForm()
         return render(request, 'finance_app/asset_new.html', {'asset_form':asset_form})
 
-def delete_account():
-    pass
+def delete_asset(request, asset_id, account_id):
+    deleted_asset = get_object_or_404(Asset, pk=asset_id).delete()
 
-def delete_asset():
-    pass
+    return redirect(reverse('finance_app:account-detail',kwargs={'account_id':account_id}))

@@ -13,6 +13,7 @@
                         <th scope="col">Shares</th>
                         <th scope="col">Price</th>
                         <th scope="col">Asset Value</th>
+			<th scope="col"></th>
  		</tr>
         </thead>
         {% for asset in account_assets %}
@@ -22,6 +23,7 @@
                                 <td>{{ asset.shares }}</th>
                                 <td>{{ asset.price }}</td>
                                 <td>{{ asset.value }}</td>
+				<td><a class="btn btn-default" href="{%url 'finance_app:delete-asset' specific_account.id asset.id %}">Delete</td>
                         </tr>
                 </tbody>
         {% endfor %}

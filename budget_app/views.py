@@ -109,8 +109,7 @@ def transaction_detail(request):
     return render(request, 'budget_app/transaction_detail.html', {'monthly_transactions':monthly_transactions})
 
 def del_expense(request, expense_id):#needs DELETE method added
-    to_delete = get_object_or_404(Expense, pk=expense_id)
-    to_delete.delete()
+    to_delete = get_object_or_404(Expense, pk=expense_id).delete()
     return redirect('/')
 
 def add_next_month(request):
