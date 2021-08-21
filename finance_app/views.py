@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from django.db.models import Sum
 from .models import AssetAccount, Asset
 from .forms import NewAccountForm, NewAssetForm
 import yfinance as yf
+from .utils import get_account_value
 from decimal import Decimal as dc
 
 def finance_dashboard(request):
@@ -27,11 +27,8 @@ def add_account(request):
 
 def account_detail(request, account_id):
     specific_account = get_object_or_404(AssetAccount, pk=account_id)
-    every_asset = Asset.objects.filter(account=specific_account)
-    total_value = every_asset.aggregate(Sum('value'))['value__sum'] or dc(0.00)
-    specific_account.value = total_value
-    specific_account.save()
-    account_assets = Asset.objects.filter(account=specific_account) 
+    account_assets = Asset.objects.filter(account=specific_account)
+    get_account_value(specific_account, account_assets)
     context = {
             'specific_account':specific_account,
             'account_assets':account_assets,
@@ -46,7 +43,7 @@ def new_asset(request, account_id):
         if asset_form.is_valid():
             account = AssetAccount.objects.get(pk = account_id)
             asset = asset_form.save(commit=False)
-            stock = yf.Ticker(asset.ticker)
+            stock = yf.Ticker(asset.ticker)#exception for if not a valid stock
             stock_info = stock.info['currentPrice']
             asset.price = stock_info
             asset.value = dc(asset.price) * asset.shares
