@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from .models import AssetAccount, Asset
+from .models import AssetAccount, Asset, AccountHistory
 from .forms import NewAccountForm, NewAssetForm
 import yfinance as yf
 from .utils import get_account_value
@@ -19,6 +19,7 @@ def add_account(request):
             account_added = account_form.save(commit=False)
             account_added.value = 0.00
             account_added.save()
+            AccountHistory.objects.create(account=account_added, value=0.00)
             return redirect('/finance')
 
     else:
@@ -28,7 +29,6 @@ def add_account(request):
 def account_detail(request, account_id):
     specific_account = get_object_or_404(AssetAccount, pk=account_id)
     account_assets = Asset.objects.filter(account=specific_account)
-    get_account_value(specific_account, account_assets)
     context = {
             'specific_account':specific_account,
             'account_assets':account_assets,
@@ -59,6 +59,14 @@ def new_asset(request, account_id):
             asset.value = dc(asset.price) * asset.shares
             asset.account = account
             asset.save()
+
+            updated_assets = Asset.objects.filter(account=account)
+            updated_value = get_account_value(account, updated_assets)
+
+            history = AccountHistory.objects.get(account=account)
+            history.value = updated_value
+            history.save()
+
             return redirect(reverse('finance_app:account-detail', kwargs={'account_id':account_id}))
 
     else:
