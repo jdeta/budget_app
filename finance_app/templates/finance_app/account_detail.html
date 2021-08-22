@@ -2,9 +2,13 @@
 
 {% block page_content %}
 
- <a class="btn btn-primary" href="{% url 'finance_app:asset_new' specific_account.id %}">
-                Add Asset
- </a>
+<a class="btn btn-secondary" href="{% url 'finance_app:finance-dashboard' %}">
+	Back
+</a>
+
+<a class="btn btn-primary" href="{% url 'finance_app:asset_new' specific_account.id %}">
+	Add Asset
+</a>
 
 <table class="table">
         <thead>
