@@ -7,3 +7,5 @@ def get_account_value(selected_account, all_assets):
     selected_account.save()
 
     return account_value
+
+

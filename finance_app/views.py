@@ -54,17 +54,14 @@ def new_asset(request, account_id):
             account = AssetAccount.objects.get(pk = account_id)
             asset = asset_form.save(commit=False)
             stock = yf.Ticker(asset.ticker)#exception for if not a valid stock
-            stock_info = stock.info['currentPrice']
-            asset.price = stock_info
+            asset.price = stock.info['currentPrice']
             asset.value = dc(asset.price) * asset.shares
             asset.account = account
             asset.save()
 
             updated_assets = Asset.objects.filter(account=account)
-            updated_value = get_account_value(account, updated_assets)
-
             history = AccountHistory.objects.get(account=account)
-            history.value = updated_value
+            history.value = get_account_value(account, updated_assets)
             history.save()
 
             return redirect(reverse('finance_app:account-detail', kwargs={'account_id':account_id}))
@@ -77,5 +74,15 @@ def delete_asset(request, asset_id, account_id):
     if request.method == "POST":
         deleted_asset = get_object_or_404(Asset, pk=asset_id).delete()
         return redirect(reverse('finance_app:account-detail',kwargs={'account_id':account_id}))
+    else:
+        return redirect(reverse('finance_app:account-detail',kwargs={'account_id':account_id}))
+
+def new_month(request, account_id):
+    if request.method =="POST":
+        account = AssetAccount.objects.get(pk=account_id)
+        latest_history = AccountHistory.objects.filter().latest()
+        new_history = AccountHistory.objects.create(account=account, value=latest_history.value)
+        new_history.save()
+        return redirect(reverse('finance_app:account-detail', kwargs={'account_id':account_id})) 
     else:
         return redirect(reverse('finance_app:account-detail',kwargs={'account_id':account_id}))

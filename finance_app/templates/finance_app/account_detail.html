@@ -2,6 +2,7 @@
 
 {% block page_content %}
 
+<div class="btn-group-vertical" role="toolbar" aria-label="Button Toolbar">
 <a class="btn btn-secondary" href="{% url 'finance_app:finance-dashboard' %}">
 	Back
 </a>
@@ -10,6 +11,13 @@
 	Add Asset
 </a>
 
+<form method="POST" action="{% url 'finance_app:new-month' specific_account.id %}">
+	{% csrf_token %}
+		<button class="btn btn-primary">
+			End of Month
+		</button>
+</form>
+</div>
 <table class="table">
         <thead>
                 <tr>

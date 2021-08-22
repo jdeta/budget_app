@@ -41,3 +41,6 @@ class Asset(Value):
 class AccountHistory(Value):
     account = models.ForeignKey(AssetAccount, on_delete=models.CASCADE)
     date = models.DateField(default=date.today)
+
+    class Meta:
+        get_latest_by = 'date'
