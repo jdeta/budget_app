@@ -2,9 +2,14 @@
 
 	{% block page_content %}
 		<a class="btn btn-primary" href="{% url 'finance_app:new_account' %}">
-                        New Account
+                    New Account
                 </a>
-
+		<form method="POST" action="{% url 'finance_app:update-all' %}">
+			{% csrf_token %}
+			<button class="btn btn-primary">
+			Update Account Values
+			</button>
+		</form>
                 <table class="table">
                   <thead>
                     <tr>

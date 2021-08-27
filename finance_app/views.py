@@ -83,7 +83,7 @@ def new_month(request, account_id):
         latest_history = AccountHistory.objects.filter().latest()
         new_history = AccountHistory.objects.create(account=account, value=latest_history.value)
         new_history.save()
-        return redirect(reverse('finance_app:account-detail', kwargs={'account_id':account_id})) 
+        return redirect(reverse('finance_app:account-detail', kwargs={'account_id':account_id}))
     else:
         return redirect(reverse('finance_app:account-detail',kwargs={'account_id':account_id}))
 
@@ -97,4 +97,13 @@ def update_account(request, account_id):
         return redirect(reverse('finance_app:account-detail',kwargs={'account_id':account_id}))
 
 
+def update_all_accounts(request):
+    if request.method == "POST":
+        all_accounts = AssetAccount.objects.all()
 
+        for a in all_accounts:
+            update_stock_values(a.id)
+
+        return redirect(reverse('finance_app:finance-dashboard'))
+    else:
+        return redirect(reverse('finance_app:finance-dashboard'))

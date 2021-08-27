@@ -15,13 +15,14 @@ def get_account_value(selected_account, all_assets):
 def update_stock_values(account_id):
     account_to_update = AssetAccount.objects.get(pk=account_id)
     account_assets = Asset.objects.filter(account=account_to_update)
+    value_list = []
 
     for a in account_assets:
         s = yf.Ticker(a.ticker).info['currentPrice']
         a.price = s
         a.value = a.shares * dc(a.price)
+        value_list.append(a.value)
         a.save()
-        
 
-
-
+    account_to_update.value = sum(value_list)
+    account_to_update.save()

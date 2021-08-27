@@ -49,7 +49,7 @@ def new_expense(request):
             expense.allocated = 0.00
             expense.disbursed = 0.00
             expense.remaining = 0.00
-            expense.month = expense_added.month.replace(day=1)
+            expense.month = expense.month.replace(day=1)
             expense.save()
             return redirect('/')
 
