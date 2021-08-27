@@ -3,7 +3,7 @@ from django.urls import reverse
 from .models import AssetAccount, Asset, AccountHistory
 from .forms import NewAccountForm, NewAssetForm
 import yfinance as yf
-from .utils import get_account_value
+from .utils import get_account_value, update_stock_values
 from decimal import Decimal as dc
 
 def finance_dashboard(request):
@@ -86,3 +86,15 @@ def new_month(request, account_id):
         return redirect(reverse('finance_app:account-detail', kwargs={'account_id':account_id})) 
     else:
         return redirect(reverse('finance_app:account-detail',kwargs={'account_id':account_id}))
+
+
+def update_account(request, account_id):
+    if request.method == "POST":
+        update_stock_values(account_id)
+        return redirect(reverse('finance_app:account-detail',kwargs={'account_id':account_id}))
+
+    else:
+        return redirect(reverse('finance_app:account-detail',kwargs={'account_id':account_id}))
+
+
+
