@@ -1,6 +1,11 @@
 {% extends 'finance_app/base.html' %}
 
 	{% block page_content %}
+	<div class="position-absolute top-0 end-0">
+        <a class="btn btn-primary" href="{% url 'budget_app:budget_dashboard' %}">
+                        Budget Dashbaord
+        </a>
+        </div>
 		<a class="btn btn-primary" href="{% url 'finance_app:new_account' %}">
                     New Account
                 </a>
